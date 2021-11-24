@@ -9,7 +9,7 @@ const Medic = ({ medic }) => {
         <Card.Body>
           <Card.Title>{medic.nume + " " + medic.prenume}</Card.Title>
           <Card.Text>{medic.specializare}</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <Button variant="primary">Detalii</Button>
         </Card.Body>
       </Card>
     </div>
