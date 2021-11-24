@@ -8,6 +8,8 @@ router.post("/addMedic", mediciController.addMedic);
 
 // GET
 router.get("/findAllMedici", mediciController.findAllMedici);
+router.get("/findMedicById/:id", mediciController.findMedicById);
+
 
 // DELETE
 router.delete("/deleteMedicById/:id", mediciController.deleteMedicById);

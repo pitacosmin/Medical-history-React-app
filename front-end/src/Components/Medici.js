@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 
-import { ADD_MEDIC_SUCCES, GET_MEDICI_SUCCES } from "../constants/constants";
+
+import { ADD_MEDIC_SUCCES, GET_MEDICI_SUCCES,DELETE_MEDIC_SUCCES, FIND_MEDIC_SUCCES } from "../constants/constants";
 import MediciFunctions from "../functions/mediciFunctions";
 
 import Medic from "./Medic/Medic";
@@ -12,6 +12,8 @@ class Medici extends Component {
     super(props);
     this.addMedic = this.addMedic.bind(this);
     this.goToFormularMedici = this.goToFormularMedici.bind(this);
+    this.deleteMedic = this.deleteMedic.bind(this);
+    this.findMedicById = this.findMedicById.bind(this);
   }
 
   state = {
@@ -20,7 +22,6 @@ class Medici extends Component {
   };
 
   componentDidMount() {
-    console.log(this.state.medicList.length);
     if (this.state.medicList.length === 0) {
       this.state.functions.getAllMedici();
       this.state.functions.emitter.addListener(GET_MEDICI_SUCCES, () => {
@@ -44,6 +45,13 @@ class Medici extends Component {
     });
   };
 
+  // goToInformatiiMedic
+  //  = () =>{
+  //   this.props.history.push({
+  //     pathname: "/informatiiMedic",
+  //   });
+  // }
+
   addMedic(medic) {
     this.state.functions.addMedic(medic);
     // this.state.functions.emitter.addListener(ADD_MEDIC_SUCCES, () => {
@@ -51,6 +59,24 @@ class Medici extends Component {
     //     medicList: [...this.state.medicList, medic],
     //   });
     // });
+  }
+
+  deleteMedic(medicId){
+    this.state.functions.deleteMedic(medicId);
+    this.state.functions.emitter.addListener(DELETE_MEDIC_SUCCES, () => {
+      this.setState({
+        medicList: this.state.functions.medici,
+      });
+    });
+  }
+
+  findMedicById(medicId){
+    this.state.functions.findMedicById(medicId);
+    this.state.functions.emitter.addListener(FIND_MEDIC_SUCCES, () => {
+      this.setState({
+        medicList: this.state.functions.medici,
+      });
+    });
   }
 
   render() {
@@ -73,7 +99,7 @@ class Medici extends Component {
         >
           {this.state.medicList.length !== 0
             ? this.state.medicList.map((value, index) => (
-                <Medic key={index} medic={value} />
+                <Medic key={index} medic={value} deleteMedic={this.deleteMedic} findMedicById={this.findMedicById}/>
               ))
             : null}
         </div>

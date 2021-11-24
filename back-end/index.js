@@ -14,8 +14,8 @@ app.use("/", router);
 
 db.sequelize
   .sync
-  //   { force: true }
-  ()
+  // ( { force: true })
+   ()
   .then(() => {
     const port = 8080;
     app.listen(port, () => console.log("App is running on port " + port));

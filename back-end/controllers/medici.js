@@ -71,6 +71,20 @@ const controller = {
     }
   },
 
+  findMedicById: async(req,res) =>{
+    try{
+      const medicDB = await MediciDB.findByPk(req.params.id);
+      if(!medicDB){
+        return res.status(404).json({message: "No medic with id "+req.params.id});
+      } else {
+        res.status(200).json({ message: "Medic found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on finding medic" });
+    }
+  },
+  
   deleteMedicById: async (req, res) => {
     try {
       const medicDB = await MediciDB.destroy({
