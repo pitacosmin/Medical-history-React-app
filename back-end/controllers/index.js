@@ -8,14 +8,14 @@ const consultatii = require("./consultatii");
 const mediciXservicii = require("./mediciXservicii");
 
 const controllers = {
-    populateTables,
-    proprietari,
-    animale,
-    fiseMedicale,
-    medici,
-    servicii,
-    consultatii,
-    mediciXservicii,
+  populateTables,
+  proprietari,
+  animale,
+  fiseMedicale,
+  medici,
+  servicii,
+  consultatii,
+  mediciXservicii,
 };
 
 module.exports = controllers;

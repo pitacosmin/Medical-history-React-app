@@ -1,22 +1,22 @@
 [
-    {   
-        "tipServiciu": "Recoltarea analizelor la animalele de companie",
-        "pret": 200,
-        "descriere": "Se realizeaza o serie de teste cu rolul de a confirma existenta a diversi agenti infectiosi, toxine"
-    },
-    {   
-        "tipServiciu": "Biopsie veterinara",
-        "pret": 1000,
-        "descriere": "Interventie chirurgicala prin care o mostra din pielea animalului este examinata cu ajutorul unui microscop"
-    },
-    {   
-        "tipServiciu": "Protezare orpedica",
-        "pret": 450,
-        "descriere": "Aplicarea unei proteze"
-    },
-    {   
-        "tipServiciu": "Investigatii imagistice",
-        "pret": 300,
-        "descriere": "Diagnosticarea animalului in baza unor imagini ale unor sectiuni din corpul respectivului animal"
-    }
+  {
+    "tipServiciu": "Recoltarea analizelor la animalele de companie",
+    "pret": 200,
+    "descriere": "Se realizeaza o serie de teste cu rolul de a confirma existenta a diversi agenti infectiosi, toxine"
+  },
+  {
+    "tipServiciu": "Biopsie veterinara",
+    "pret": 1000,
+    "descriere": "Interventie chirurgicala prin care o mostra din pielea animalului este examinata cu ajutorul unui microscop"
+  },
+  {
+    "tipServiciu": "Protezare orpedica",
+    "pret": 450,
+    "descriere": "Aplicarea unei proteze"
+  },
+  {
+    "tipServiciu": "Investigatii imagistice",
+    "pret": 300,
+    "descriere": "Diagnosticarea animalului in baza unor imagini ale unor sectiuni din corpul respectivului animal"
+  }
 ]

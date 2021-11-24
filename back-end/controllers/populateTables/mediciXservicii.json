@@ -1,22 +1,22 @@
 [
-    {   
-        "medicId": 1,
-        "serviciuId": 3
-    },
-    {   
-        "medicId": 3,
-        "serviciuId": 1
-    },
-    {   
-        "medicId": 3,
-        "serviciuId": 4
-    },
-    {   
-        "medicId": 4,
-        "serviciuId": 1
-    },
-    {   
-        "medicId": 2,
-        "serviciuId": 1
-    }
+  {
+    "medicId": 1,
+    "serviciuId": 3
+  },
+  {
+    "medicId": 3,
+    "serviciuId": 1
+  },
+  {
+    "medicId": 3,
+    "serviciuId": 4
+  },
+  {
+    "medicId": 4,
+    "serviciuId": 1
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 1
+  }
 ]

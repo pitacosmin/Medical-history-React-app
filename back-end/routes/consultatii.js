@@ -3,8 +3,16 @@ const router = express.Router();
 
 const consultatiiController = require("../controllers").consultatii;
 
+// POST
 router.post("/addConsultatie", consultatiiController.addConsultatie);
-router.get("/findAllConsultatii",consultatiiController.findAllConsultatii);
-router.delete("/deleteConsultatieById/:id", consultatiiController.deleteConsultatieById);
+
+// GET
+router.get("/findAllConsultatii", consultatiiController.findAllConsultatii);
+
+// DELETE
+router.delete(
+  "/deleteConsultatieById/:id",
+  consultatiiController.deleteConsultatieById
+);
 
 module.exports = router;

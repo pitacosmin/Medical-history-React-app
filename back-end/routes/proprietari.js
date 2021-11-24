@@ -7,14 +7,15 @@ const proprietariController = require("../controllers").proprietari;
 router.post("/addProprietar", proprietariController.addProprietar);
 
 //Get
-router.get("/findAllProprietari",proprietariController.findAllProprietari);
+router.get("/findAllProprietari", proprietariController.findAllProprietari);
 
 //Delete
-router.delete("/deleteProprietarById/:id", proprietariController.deleteProprietarById);
+router.delete(
+  "/deleteProprietarById/:id",
+  proprietariController.deleteProprietarById
+);
 
 //Update
 router.put("/updateNumarTelefon/:id", proprietariController.updateNumarTelefon);
-
-
 
 module.exports = router;

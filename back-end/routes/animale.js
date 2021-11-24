@@ -7,7 +7,7 @@ const animaleController = require("../controllers").animale;
 router.post("/addAnimal", animaleController.addAnimal);
 
 //Get
-router.get("/findAllAnimale",animaleController.findAllAnimale);
+router.get("/findAllAnimale", animaleController.findAllAnimale);
 
 //Delete
 router.delete("/deleteAimalById/:id", animaleController.deleteAnimalById);

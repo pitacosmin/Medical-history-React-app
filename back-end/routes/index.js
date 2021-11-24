@@ -9,13 +9,12 @@ const mediciRouter = require("./medici");
 const serviciiRouter = require("./servicii");
 const consultatiiRouter = require("./consultatii");
 
-router.use("/",populateTablesRouter);
-router.use("/",proprietariRouter);
-router.use("/",animaleRouter);
-router.use("/",fiseMedicaleRouter);
-router.use("/",mediciRouter);
-router.use("/",serviciiRouter);
-router.use("/",consultatiiRouter);
-
+router.use("/", populateTablesRouter);
+router.use("/", proprietariRouter);
+router.use("/", animaleRouter);
+router.use("/", fiseMedicaleRouter);
+router.use("/", mediciRouter);
+router.use("/", serviciiRouter);
+router.use("/", consultatiiRouter);
 
 module.exports = router;
