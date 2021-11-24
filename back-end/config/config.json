@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "root",
+    "password": "11082000",
+    "database": "cabinet_veterinar",
+    "host": "localhost",
+    "dialect": "mysql",
+    "define":{
+      "timestamps":false
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "Cabinet_Veterinar",
+    "host": "localhost",
+    "dialect": "mssql",
+    "define":{
+      "timestamps":false
+    }
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "Cabinet_Veterinar",
+    "host": "localhost",
+    "dialect": "mssql",
+    "define":{
+      "timestamps":false
+    }
+  }
+}

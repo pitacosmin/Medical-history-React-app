@@ -1,0 +1,26 @@
+[
+    {
+        "nume": "Ionescu",
+        "prenume": "Andrei",
+        "numarTelefon": "0711223344",
+        "email": "ionescu.andrei@email.com"
+    },
+    {
+        "nume": "Pop",
+        "prenume": "Matei",
+        "numarTelefon": "0744332211",
+        "email": "pop.matei@email.com"
+    },
+    {
+        "nume": "Marinescu",
+        "prenume": "Maria",
+        "numarTelefon": "0755566677",
+        "email": "marinescu.maria@email.com"
+    },
+    {
+        "nume": "Grigore",
+        "prenume": "Alexandra",
+        "numarTelefon": "0700000001",
+        "email": "grigore.alexandra@email.com"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {   
+        "animalId" : 1,
+        "greutate": "3 kg",
+        "vaccinat": true,
+        "simptome": "Fractura la coada"
+    },
+    {   
+        "animalId" : 2,
+        "greutate": "2 kg",
+        "vaccinat": true,
+        "simptome": "Schimbarea apetitului"
+    },
+    {   
+        "animalId" : 3,
+        "greutate": "0.5 kg",
+        "vaccinat": false,
+        "simptome": "Caderea excesiva a parului"
+    },
+    {   
+        "animalId" : 4,
+        "greutate": "2 kg",
+        "vaccinat": true,
+        "simptome": "Respiratie grea"
+    },
+    {   
+        "animalId" : 5,
+        "greutate": "1.5 kg",
+        "vaccinat": false,
+        "simptome": "Stres de captivitate"
+    }
+]
