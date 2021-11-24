@@ -49,34 +49,32 @@ class MediciFunctions {
     }
   }
 
-
   async deleteMedic(medicId) {
-      try{
-        await axios.delete(`${SERVER}/deleteMedicById/${medicId}`, {
-          headers: { "Content-Type": "application/json" },
-        });
-        this.medici = this.medici.filter((medic) => {
-          return medic.medicId !== medicId;
-        });
-        this.emitter.emit(DELETE_MEDIC_SUCCES);
-      } catch(error) {
-        console.log(error);
-        this.emitter.emit(DELETE_MEDIC_ERROR);
-      }
+    try {
+      await axios.delete(`${SERVER}/deleteMedicById/${medicId}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+      this.medici = this.medici.filter((medic) => {
+        return medic.medicId !== medicId;
+      });
+      this.emitter.emit(DELETE_MEDIC_SUCCES);
+    } catch (error) {
+      console.log(error);
+      this.emitter.emit(DELETE_MEDIC_ERROR);
+    }
   }
 
-  async findMedicById(medicId){
-    try{
-      const medic = await axios.get(`${SERVER}/findMedicById/${medicId}`,{
+  async findMedicById(medicId) {
+    try {
+      const medic = await axios.get(`${SERVER}/findMedicById/${medicId}`, {
         headers: { "Content-Type": "application/json" },
       });
       return medic;
-    } catch(error){
+    } catch (error) {
       console.log(error);
       return null;
     }
   }
 }
-
 
 export default MediciFunctions;

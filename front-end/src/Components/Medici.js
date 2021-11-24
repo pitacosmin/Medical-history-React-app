@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-
-import { ADD_MEDIC_SUCCES, GET_MEDICI_SUCCES,DELETE_MEDIC_SUCCES, FIND_MEDIC_SUCCES } from "../constants/constants";
+import {
+  ADD_MEDIC_SUCCES,
+  GET_MEDICI_SUCCES,
+  DELETE_MEDIC_SUCCES,
+} from "../constants/constants";
 import MediciFunctions from "../functions/mediciFunctions";
 
 import Medic from "./Medic/Medic";
@@ -13,7 +16,6 @@ class Medici extends Component {
     this.addMedic = this.addMedic.bind(this);
     this.goToFormularMedici = this.goToFormularMedici.bind(this);
     this.deleteMedic = this.deleteMedic.bind(this);
-    this.findMedicById = this.findMedicById.bind(this);
   }
 
   state = {
@@ -45,12 +47,14 @@ class Medici extends Component {
     });
   };
 
-  // goToInformatiiMedic
-  //  = () =>{
-  //   this.props.history.push({
-  //     pathname: "/informatiiMedic",
-  //   });
-  // }
+  goToInformatiiMedic = (medicId) => {
+    this.props.history.push({
+      pathname: "/informatiiMedic",
+      state: {
+        medicId: medicId,
+      },
+    });
+  };
 
   addMedic(medic) {
     this.state.functions.addMedic(medic);
@@ -61,18 +65,9 @@ class Medici extends Component {
     // });
   }
 
-  deleteMedic(medicId){
+  deleteMedic(medicId) {
     this.state.functions.deleteMedic(medicId);
     this.state.functions.emitter.addListener(DELETE_MEDIC_SUCCES, () => {
-      this.setState({
-        medicList: this.state.functions.medici,
-      });
-    });
-  }
-
-  findMedicById(medicId){
-    this.state.functions.findMedicById(medicId);
-    this.state.functions.emitter.addListener(FIND_MEDIC_SUCCES, () => {
       this.setState({
         medicList: this.state.functions.medici,
       });
@@ -99,7 +94,13 @@ class Medici extends Component {
         >
           {this.state.medicList.length !== 0
             ? this.state.medicList.map((value, index) => (
-                <Medic key={index} medic={value} deleteMedic={this.deleteMedic} findMedicById={this.findMedicById}/>
+                <Medic
+                  key={index}
+                  medic={value}
+                  deleteMedic={this.deleteMedic}
+                  findMedicById={this.findMedicById}
+                  goToInformatiiMedic={this.goToInformatiiMedic}
+                />
               ))
             : null}
         </div>
