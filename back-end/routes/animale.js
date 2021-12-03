@@ -10,6 +10,6 @@ router.post("/addAnimal", animaleController.addAnimal);
 router.get("/findAllAnimale", animaleController.findAllAnimale);
 
 //Delete
-router.delete("/deleteAimalById/:id", animaleController.deleteAnimalById);
+router.delete("/deleteAnimalById/:id", animaleController.deleteAnimalById);
 
 module.exports = router;

@@ -4,34 +4,34 @@
     "nume": "Rex",
     "specie": "caine",
     "rasa": "beagle",
-    "dataNasterii": "11/10/2015"
+    "dataNasterii": "11-10-2015"
   },
   {
     "proprietarId": 1,
     "nume": "Sofi",
     "specie": "pisica",
     "rasa": "british shorthair",
-    "dataNasterii": "9/7/2019"
+    "dataNasterii": "9-7-2019"
   },
   {
     "proprietarId": 2,
     "nume": "Pufi",
     "specie": "hamster",
     "rasa": "sirian",
-    "dataNasterii": "8/5/2018"
+    "dataNasterii": "8-5-2018"
   },
   {
     "proprietarId": 3,
     "nume": "Coco",
     "specie": "papagal",
     "rasa": "stacojiu",
-    "dataNasterii": "5/12/2020"
+    "dataNasterii": "5-12-2020"
   },
   {
     "proprietarId": 4,
     "nume": "Diablo",
     "specie": "piton",
     "rasa": "regal",
-    "dataNasterii": "5/30/2020"
+    "dataNasterii": "5-30-2020"
   }
 ]

@@ -2,35 +2,35 @@
   {
     "nume": "Popescu",
     "prenume": "Ion",
-    "dataNasterii": "11/08/1985",
+    "dataNasterii": "11-08-1985",
     "sex": "M",
     "specializare": "Ortopedie veterinara"
   },
   {
     "nume": "Dumitrecu",
     "prenume": "Cristina",
-    "dataNasterii": "10/10/1990",
+    "dataNasterii": "10-10-1990",
     "sex": "F",
     "specializare": "Medicina veterinara preventiva"
   },
   {
     "nume": "Balan",
     "prenume": "Andreaa",
-    "dataNasterii": "11/08/1985",
+    "dataNasterii": "11-08-1985",
     "sex": "F",
     "specializare": "Dermatologie veterinara"
   },
   {
     "nume": "Bordea",
     "prenume": "Mihai",
-    "dataNasterii": "09/03/1993",
+    "dataNasterii": "09-03-1993",
     "sex": "M",
     "specializare": "Radiologie veterinara"
   },
   {
     "nume": "Apostu",
     "prenume": "Georgian",
-    "dataNasterii": "07/02/1987",
+    "dataNasterii": "07-02-1987",
     "sex": "M",
     "specializare": "Stomatologie veterinara"
   }

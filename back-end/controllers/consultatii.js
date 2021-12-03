@@ -1,14 +1,17 @@
 const ConsultatiiDB = require("../models").Consultatii;
+const sequelize = require("../models/index").sequelize;
+const { QueryTypes } = require("sequelize");
 
 function isValidDate(dateString) {
   // First check for the pattern
-  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
+  // yyyy-mm--dd
+  if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateString)) return false;
 
   // Parse the date parts to integers
-  var parts = dateString.split("/");
-  var day = parseInt(parts[1], 10);
-  var month = parseInt(parts[0], 10);
-  var year = parseInt(parts[2], 10);
+  var parts = dateString.split("-");
+  var day = parseInt(parts[2], 10);
+  var month = parseInt(parts[1], 10);
+  var year = parseInt(parts[0], 10);
 
   // Check the ranges of month and year
   if (year < 1000 || year > 3000 || month == 0 || month > 12) return false;
@@ -35,12 +38,23 @@ const controller = {
 
     try {
       const consultatie = {
-        medicId: req.body.medicId,
-        serviciuId: req.body.serviciuId,
+        mediciXserviciiId: req.body.mediciXserviciiId,
         fisaId: req.body.fisaId,
         data: req.body.data,
       };
-      await ConsultatiiDB.create(consultatie);
+
+      await sequelize.query(
+        "INSERT INTO CONSULTATII(mediciXserviciiId, fisaId, data) VALUES(:mediciXserviciiId, :fisaId, :data)",
+        {
+          replacements: {
+            mediciXserviciiId: consultatie.mediciXserviciiId,
+            fisaId: consultatie.fisaId,
+            data: consultatie.data,
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      // await ConsultatiiDB.create(consultatie);
       res.status(200).json({ message: "Consultatie added" });
     } catch (error) {
       console.log(error);
@@ -50,7 +64,10 @@ const controller = {
 
   findAllConsultatii: async (req, res) => {
     try {
-      const consultatiiDB = await ConsultatiiDB.findAll();
+      const consultatiiDB = await sequelize.query("SELECT * FROM CONSULTATII", {
+        type: QueryTypes.SELECT,
+      });
+      // const consultatiiDB = await ConsultatiiDB.findAll();
       res.status(200).json(consultatiiDB);
     } catch (error) {
       console.log(error);
@@ -60,17 +77,24 @@ const controller = {
 
   deleteConsultatieById: async (req, res) => {
     try {
-      const consultatieDB = await ConsultatiiDB.destroy({
-        where: {
-          consultatieId: req.params.id,
-        },
-      });
-      if (!consultatieDB) {
-        res
-          .status(404)
-          .json({
-            message: "No consultatie to delete with id" + req.params.id,
-          });
+      const consultatieDB = await sequelize.query(
+        "DELETE FROM CONSULTATII WHERE consultatieId = :consultatieId",
+        {
+          replacements: {
+            consultatieId: req.params.id,
+          },
+          type: QueryTypes.DELETE,
+        }
+      );
+      // const consultatieDB = await ConsultatiiDB.destroy({
+      //   where: {
+      //     consultatieId: req.params.id,
+      //   },
+      // });
+      if (consultatieDB !== undefined) {
+        res.status(404).json({
+          message: "No consultatie to delete with id " + req.params.id,
+        });
       } else {
         res.status(200).json({ message: "Consultatie deleted" });
       }

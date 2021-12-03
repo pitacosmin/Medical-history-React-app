@@ -30,7 +30,8 @@ class MediciFunctions {
     const month = medic.dataNasterii.getUTCMonth() + 1; //months from 1-12
     const day = medic.dataNasterii.getUTCDate();
     const year = medic.dataNasterii.getUTCFullYear();
-    medic.dataNasterii = month + "/" + day + "/" + year;
+    medic.dataNasterii = year + "-" + month + "-" + day;
+    console.log(medic.dataNasterii);
     if (medic.sex.charAt(0) === "B") {
       medic.sex = "M";
     } else {
@@ -41,7 +42,6 @@ class MediciFunctions {
         headers: { "Content-Type": "application/json" },
       });
       this.medici.push(medic);
-      console.log(this.medici);
       this.emitter.emit(GET_MEDICI_SUCCES);
     } catch (error) {
       console.log(error);

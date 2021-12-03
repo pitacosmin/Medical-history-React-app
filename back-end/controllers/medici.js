@@ -1,14 +1,17 @@
 const MediciDB = require("../models").Medici;
+const sequelize = require("../models/index").sequelize;
+const { QueryTypes } = require("sequelize");
 
 function isValidDate(dateString) {
   // First check for the pattern
-  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
+  // yyyy-mm--dd
+  if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateString)) return false;
 
   // Parse the date parts to integers
-  var parts = dateString.split("/");
-  var day = parseInt(parts[1], 10);
-  var month = parseInt(parts[0], 10);
-  var year = parseInt(parts[2], 10);
+  var parts = dateString.split("-");
+  var day = parseInt(parts[2], 10);
+  var month = parseInt(parts[1], 10);
+  var year = parseInt(parts[0], 10);
 
   // Check the ranges of month and year
   if (year < 1000 || year > 3000 || month == 0 || month > 12) return false;
@@ -53,7 +56,21 @@ const controller = {
         sex: req.body.sex,
         specializare: req.body.specializare,
       };
-      await MediciDB.create(medic);
+      // await MediciDB.create(medic);
+      await sequelize.query(
+        "INSERT INTO MEDICI(nume, prenume, dataNasterii, sex, specializare) VALUES(:nume, :prenume, :dataNasterii, :sex, :specializare)",
+        {
+          replacements: {
+            nume: medic.nume,
+            prenume: medic.prenume,
+            dataNasterii: medic.dataNasterii,
+            sex: medic.sex,
+            specializare: medic.specializare,
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+
       res.status(200).json({ message: "Medic added" });
     } catch (error) {
       console.log(error);
@@ -63,7 +80,10 @@ const controller = {
 
   findAllMedici: async (req, res) => {
     try {
-      const mediciDB = await MediciDB.findAll();
+      const mediciDB = await sequelize.query("SELECT * FROM MEDICI", {
+        type: QueryTypes.SELECT,
+      });
+      // const mediciDB = await MediciDB.findAll();
       res.status(200).json(mediciDB);
     } catch (error) {
       console.log(error);
@@ -73,7 +93,17 @@ const controller = {
 
   findMedicById: async (req, res) => {
     try {
-      const medicDB = await MediciDB.findByPk(req.params.id);
+      const medicDB = await sequelize.query(
+        "SELECT * FROM MEDICI WHERE medicId = :medicId",
+        {
+          replacements: {
+            medicId: req.params.id,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+
+      // const medicDB = await MediciDB.findByPk(req.params.id);
       if (!medicDB) {
         return res.status(404).json(null);
       } else {
@@ -85,17 +115,52 @@ const controller = {
     }
   },
 
+  findConsultatiiForMedicByIdMedic: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+        "SELECT * FROM MEDICI as M, MEDICIXSERVICII as MXS, CONSULTATII as C WHERE M.medicId = :medicId AND M.medicId = MXS.medicId AND MXS.mediciXserviciiId = C.mediciXserviciiId",
+        {
+          replacements: {
+            medicId: req.params.id,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+
+      // const medicDB = await MediciDB.findByPk(req.params.id);
+      if (!consultatiiDB) {
+        return res.status(404).json(null);
+      } else {
+        res.status(200).json(consultatiiDB);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(null);
+    }
+  },
+
   deleteMedicById: async (req, res) => {
     try {
-      const medicDB = await MediciDB.destroy({
-        where: {
-          medicId: req.params.id,
-        },
-      });
-      if (!medicDB) {
+      const medicDB = await sequelize.query(
+        "DELETE FROM MEDICI WHERE medicId = :medicId",
+        {
+          replacements: {
+            medicId: req.params.id,
+          },
+          type: QueryTypes.DELETE,
+        }
+      );
+
+      // const medicDB = await MediciDB.destroy({
+      //   where: {
+      //     medicId: req.params.id,
+      //   },
+      // });
+      console.log(medicDB);
+      if (medicDB !== undefined) {
         res
           .status(404)
-          .json({ message: "No medic to delete with id" + req.params.id });
+          .json({ message: "No medic to delete with id " + req.params.id });
       } else {
         res.status(200).json({ message: "medic deleted" });
       }

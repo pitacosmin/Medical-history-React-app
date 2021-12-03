@@ -13,9 +13,8 @@ app.use(cors());
 app.use("/", router);
 
 db.sequelize
-  .sync
-  // ( { force: true })
-   ()
+  // .sync({ force: true })
+  .sync()
   .then(() => {
     const port = 8080;
     app.listen(port, () => console.log("App is running on port " + port));
