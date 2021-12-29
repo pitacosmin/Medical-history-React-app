@@ -13,7 +13,6 @@ import Medic from "./Medic/Medic";
 class Medici extends Component {
   constructor(props) {
     super(props);
-    this.addMedic = this.addMedic.bind(this);
     this.goToFormularMedici = this.goToFormularMedici.bind(this);
     this.deleteMedic = this.deleteMedic.bind(this);
   }
@@ -24,26 +23,17 @@ class Medici extends Component {
   };
 
   componentDidMount() {
-    if (this.state.medicList.length === 0) {
-      this.state.functions.getAllMedici();
-      this.state.functions.emitter.addListener(GET_MEDICI_SUCCES, () => {
-        this.setState({
-          medicList: this.state.functions.medici,
-        });
+    this.state.functions.getAllMedici();
+    this.state.functions.emitter.addListener(GET_MEDICI_SUCCES, () => {
+      this.setState({
+        medicList: this.state.functions.medici,
       });
-    } else {
-      this.state.functions.emitter.addListener(ADD_MEDIC_SUCCES, () => {
-        this.setState({
-          medicList: this.state.functions.medici,
-        });
-      });
-    }
+    });
   }
 
   goToFormularMedici = () => {
     this.props.history.push({
       pathname: "/formularMedici",
-      state: { addMedic: this.addMedic },
     });
   };
 
@@ -55,15 +45,6 @@ class Medici extends Component {
       },
     });
   };
-
-  addMedic(medic) {
-    this.state.functions.addMedic(medic);
-    // this.state.functions.emitter.addListener(ADD_MEDIC_SUCCES, () => {
-    //   this.setState({
-    //     medicList: [...this.state.medicList, medic],
-    //   });
-    // });
-  }
 
   deleteMedic(medicId) {
     this.state.functions.deleteMedic(medicId);

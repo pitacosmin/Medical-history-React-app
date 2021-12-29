@@ -3,6 +3,13 @@ import { Card, Button } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 
 const Medic = ({ medic, deleteMedic, goToInformatiiMedic }) => {
+  const goToFormularMedici = () => {
+    this.props.history.push({
+      pathname: "/formularMedici",
+      state: { idMedic: medic.id },
+    });
+  };
+
   return (
     <div
       style={{
@@ -23,6 +30,9 @@ const Medic = ({ medic, deleteMedic, goToInformatiiMedic }) => {
             }}
           >
             Detalii
+          </Button>
+          <Button variant="primary" style={{ marginLeft: "15px" }}>
+            Modifica
           </Button>
           <div
             style={{

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
+
+import MediciFunctions from "../../functions/mediciFunctions";
 
 class FormularMedici extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class FormularMedici extends Component {
     sex: ["Barbat", "Femeie"],
     specializare: "",
     checkedRadio: "Barbat",
+    functions: new MediciFunctions(),
   };
 
   changeRadio(e) {
@@ -31,7 +33,7 @@ class FormularMedici extends Component {
     });
   }
 
-  goBack() {
+  async goBack() {
     const medic = {
       nume: this.state.nume,
       prenume: this.state.prenume,
@@ -39,7 +41,7 @@ class FormularMedici extends Component {
       sex: this.state.checkedRadio,
       specializare: this.state.specializare,
     };
-    this.props.location.state.addMedic(medic);
+    await this.state.functions.addMedic(medic);
     this.props.history.push("/");
   }
 
