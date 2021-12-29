@@ -3,6 +3,7 @@ import MediciFunctions from "../../functions/mediciFunctions";
 
 const InformatiiMedic = (props) => {
   const [medic, setMedic] = useState(null);
+  const [consultatiiAndServicii, setConsultatiiAndServicii] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -10,15 +11,16 @@ const InformatiiMedic = (props) => {
       const medicResponse = await functions.findMedicById(
         props.location.state.medicId
       );
-      const medicData = medicResponse.data;
+      const consultatiiAndServicii =
+        await functions.getConsultatiiAndServiciiForMedic(
+          props.location.state.medicId
+        );
+      setConsultatiiAndServicii([...consultatiiAndServicii.data]);
+      const medicData = medicResponse.data[0];
       setMedic(medicData);
     };
     fetchData();
   }, []);
-
-  // Nume: Nume
-  // Prenume: Prenume
-  // Specializare:
 
   return medic ? (
     <div
@@ -57,10 +59,36 @@ const InformatiiMedic = (props) => {
         style={{
           display: "flex",
           flex: 3,
+          flexDirection: "column",
+          alignItems: "flex-start",
           height: "100vh",
+          marginLeft: "12px",
         }}
       >
-        Consultatii
+        <h1
+          style={{
+            textWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          Consultatii
+        </h1>
+        {consultatiiAndServicii.map((value, idx) => (
+          <div
+            key={idx}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <p>Data consultatie: {value.data}</p>
+            <p>Tip serviciu: {value.tipServiciu}</p>
+            <p>Descriere: {value.descriere}</p>
+            <p>Pret: {value.pret} lei</p>
+            <br></br>
+          </div>
+        ))}
       </div>
     </div>
   ) : null;

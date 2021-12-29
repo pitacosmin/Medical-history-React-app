@@ -1,12 +1,17 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
 
-const Medic = ({ medic, deleteMedic, goToInformatiiMedic }) => {
-  const goToFormularMedici = () => {
-    this.props.history.push({
-      pathname: "/formularMedici",
-      state: { idMedic: medic.id },
+const Medic = ({ medic, deleteMedic }) => {
+  const history = useHistory();
+
+  const goToInformatiiMedic = () => {
+    history.push({
+      pathname: "/informatiiMedic",
+      state: {
+        medicId: medic.medicId,
+      },
     });
   };
 
@@ -26,7 +31,7 @@ const Medic = ({ medic, deleteMedic, goToInformatiiMedic }) => {
           <Button
             variant="primary"
             onClick={() => {
-              goToInformatiiMedic(medic.medicId);
+              goToInformatiiMedic();
             }}
           >
             Detalii

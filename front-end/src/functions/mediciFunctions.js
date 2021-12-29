@@ -75,6 +75,21 @@ class MediciFunctions {
       return null;
     }
   }
+
+  async getConsultatiiAndServiciiForMedic(medicId) {
+    try {
+      const data = await axios.get(
+        `${SERVER}/findConsultatiiAndServiciiForMedicByIdMedic/${medicId}`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
 
 export default MediciFunctions;

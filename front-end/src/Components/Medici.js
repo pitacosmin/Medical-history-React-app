@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-import {
-  ADD_MEDIC_SUCCES,
-  GET_MEDICI_SUCCES,
-  DELETE_MEDIC_SUCCES,
-} from "../constants/constants";
+import { GET_MEDICI_SUCCES, DELETE_MEDIC_SUCCES } from "../constants/constants";
 import MediciFunctions from "../functions/mediciFunctions";
 
 import Medic from "./Medic/Medic";
@@ -34,15 +30,6 @@ class Medici extends Component {
   goToFormularMedici = () => {
     this.props.history.push({
       pathname: "/formularMedici",
-    });
-  };
-
-  goToInformatiiMedic = (medicId) => {
-    this.props.history.push({
-      pathname: "/informatiiMedic",
-      state: {
-        medicId: medicId,
-      },
     });
   };
 
@@ -80,7 +67,6 @@ class Medici extends Component {
                   medic={value}
                   deleteMedic={this.deleteMedic}
                   findMedicById={this.findMedicById}
-                  goToInformatiiMedic={this.goToInformatiiMedic}
                 />
               ))
             : null}
