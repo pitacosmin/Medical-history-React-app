@@ -115,10 +115,10 @@ const controller = {
     }
   },
 
-  findConsultatiiForMedicByIdMedic: async (req, res) => {
+  findConsultatiiAndServiciiForMedicByIdMedic: async (req, res) => {
     try {
       const consultatiiDB = await sequelize.query(
-        "SELECT * FROM MEDICI as M, MEDICIXSERVICII as MXS, CONSULTATII as C WHERE M.medicId = :medicId AND M.medicId = MXS.medicId AND MXS.mediciXserviciiId = C.mediciXserviciiId",
+        "SELECT C.data, S.tipServiciu, S.pret, S.descriere FROM MEDICI as M INNER JOIN MEDICIXSERVICII as MXS ON M.medicId = MXS.medicId INNER JOIN CONSULTATII as C ON MXS.mediciXserviciiId = C.mediciXserviciiId INNER JOIN SERVICII as S ON S.serviciuId = MXS.serviciuId WHERE M.medicId = :medicId",
         {
           replacements: {
             medicId: req.params.id,

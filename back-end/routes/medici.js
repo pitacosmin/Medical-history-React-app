@@ -10,8 +10,8 @@ router.post("/addMedic", mediciController.addMedic);
 router.get("/findAllMedici", mediciController.findAllMedici);
 router.get("/findMedicById/:id", mediciController.findMedicById);
 router.get(
-  "/findConsultatiiForMedicByIdMedic/:id",
-  mediciController.findConsultatiiForMedicByIdMedic
+  "/findConsultatiiAndServiciiForMedicByIdMedic/:id",
+  mediciController.findConsultatiiAndServiciiForMedicByIdMedic
 );
 
 // DELETE

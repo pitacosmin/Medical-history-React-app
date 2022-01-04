@@ -103,6 +103,26 @@ const controller = {
       res.status(500).json({ message: "Error on deleting consultatie" });
     }
   },
+
+  getConsultatiiInformation: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+        "SELECT C.data, M.nume as numeMedic, M.prenume, A.nume as numeAnimal, F.simptome, S.tipServiciu" +
+          " FROM CONSULTATII as C INNER JOIN MEDICIXSERVICII as MXS ON MXS.mediciXserviciiId = C.mediciXserviciiId" +
+          " INNER JOIN MEDICI as M ON MXS.medicId = M.medicId" +
+          " INNER JOIN SERVICII as S ON MXS.serviciuId = S.serviciuId" +
+          " INNER JOIN FISEMEDICALE as F ON C.fisaId = F.fisaId" +
+          " INNER JOIN ANIMALE as A ON F.animalId = A.animalId",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      res.status(200).json(consultatiiDB);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on retrieving consultatii" });
+    }
+  },
 };
 
 module.exports = controller;

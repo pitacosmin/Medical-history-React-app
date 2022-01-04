@@ -1,17 +1,54 @@
 import React, { Component } from "react";
-// import {div} from 'react-bootstrap';
+import { Table } from "react-bootstrap";
+import ConsultatiiFunctions from "../functions/consultatiiFunctions";
 
 class Consultatii extends Component {
   state = {
-    medicList: [],
+    consultatii: [],
+    consultatiiFunctions: new ConsultatiiFunctions(),
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const fetchConsultatii = async () => {
+      const consultatii =
+        await this.state.consultatiiFunctions.getConsultatii();
+      this.setState({ ...this.state, consultatii });
+    };
+    fetchConsultatii();
+  }
 
   render() {
     return (
       <div>
-        <h1>Consultatii</h1>
+        <h1
+          style={{
+            margin: "20px 0",
+          }}
+        >
+          Consultatii
+        </h1>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nume medic</th>
+              <th>Nume animal</th>
+              <th>Simptome</th>
+              <th>Tip serviciu</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.consultatii.map((value, idx) => (
+              <tr key={idx}>
+                <td>{value.data}</td>
+                <td>{value.numeMedic + " " + value.prenume}</td>
+                <td>{value.numeAnimal}</td>
+                <td>{value.simptome}</td>
+                <td>{value.tipServiciu}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   }
