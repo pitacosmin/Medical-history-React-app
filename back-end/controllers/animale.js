@@ -117,6 +117,35 @@ const controller = {
       res.status(500).json({ message: "Error on deleting animal" });
     }
   },
+
+  getSpecii:  async (req, res) => {
+    try {
+      const animaleDB = await sequelize.query("SELECT DISTINCT specie FROM ANIMALE", {
+        type: QueryTypes.SELECT,
+      });
+      res.status(200).json(animaleDB);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on retrieving specie" });
+    }
+  },
+
+  getAnimaleAndProprietari:  async (req, res) => {
+    try {
+      const animaleDB = await sequelize.query(
+        "SELECT A.nume as numeAnimal, A.specie, A.rasa, concat(P.nume, concat(' ',P.prenume)) as proprietar , P.proprietarId FROM ANIMALE A" +
+              " JOIN PROPRIETARI P ON P.proprietarId = A.proprietarId" +
+              " ORDER BY A.nume", 
+      {
+        type: QueryTypes.SELECT,
+      });
+      res.status(200).json(animaleDB);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on retrieving animale and proprietari" });
+    }
+  },
+
 };
 
 module.exports = controller;

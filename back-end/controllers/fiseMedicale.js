@@ -1,60 +1,50 @@
 const FiseMedicaleDB = require("../models").FiseMedicale;
+const sequelize = require("../models/index").sequelize;
+const { QueryTypes } = require("sequelize");
 
 const controller = {
-  addFisaMedicala: async (req, res) => {
-    if (!req.body.greutate || req.body.greutate.trim() === "") {
-      return res.status(400).json({ message: "Greutate invalida" });
-    }
-    if (!req.body.simptome || req.body.simptome.trim() === "") {
-      return res.status(400).json({ message: "Introduceti simptome" });
-    }
 
+  getFiseMedicaleAndAnimal: async (req, res) => {
     try {
-      const fisaMedicala = {
-        animalId: req.body.animalId,
-        greutate: req.body.greutate,
-        vaccinat: req.body.vaccinat,
-        simptome: req.body.simptome,
-      };
-      await FiseMedicaleDB.create(fisaMedicala);
-      res.status(200).json({ message: "Fisa medicala added" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error on creating new fisa medicala" });
-    }
-  },
-
-  findAllFiseMedicale: async (req, res) => {
-    try {
-      const fiseMedicaleDB = await FiseMedicaleDB.findAll();
-      res.status(200).json(fiseMedicaleDB);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error on retrieving fiseMedicale" });
-    }
-  },
-
-  deleteFisaMedicalaById: async (req, res) => {
-    try {
-      const fisaMedicalaDB = await FiseMedicaleDB.destroy({
-        where: {
-          fisaMedicalaId: req.params.id,
-        },
-      });
-      if (!fisaMedicalaDB) {
-        res
-          .status(404)
-          .json({
-            message: "No fisaMedicala to delete with id" + req.params.id,
-          });
+      const fisaDB = await sequelize.query(
+        " SELECT A.nume, A.specie, A.rasa, A.dataNasterii, F.fisaId, F.greutate, F.vaccinat, F.simptome FROM fisemedicale F" + 
+	         " JOIN ANIMALE A ON F.animalId = A.animalId",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (!fisaDB) {
+        return res.status(404).json(null);
       } else {
-        res.status(200).json({ message: "FisaMedicala deleted" });
+        res.status(200).json(fisaDB);
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Error on deleting fisaMedicala" });
+      res.status(500).json(null);
     }
   },
+
+  getFiseMedicaleByVaccin: async (req, res) => {
+    try {
+      const fisaDB = await sequelize.query(
+        " SELECT A.nume, A.specie, A.rasa, A.dataNasterii, F.fisaId, F.greutate, F.vaccinat, F.simptome FROM fisemedicale F" + 
+	         " JOIN ANIMALE A ON F.animalId = A.animalId" + 
+           " WHERE F.vaccinat = 1",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (!fisaDB) {
+        return res.status(404).json(null);
+      } else {
+        res.status(200).json(fisaDB);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(null);
+    }
+  },
+
 };
 
 module.exports = controller;

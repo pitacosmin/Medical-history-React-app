@@ -28,5 +28,35 @@
     "greutate": "1.5 kg",
     "vaccinat": false,
     "simptome": "Stres de captivitate"
+  },
+  {
+    "animalId": 6,
+    "greutate": "2.1 kg",
+    "vaccinat": false,
+    "simptome": "Venit pentru vaccinul anual"
+  },
+  {
+    "animalId": 7,
+    "greutate": "4 kg",
+    "vaccinat": true,
+    "simptome": "Are purici"
+  },
+  {
+    "animalId": 8,
+    "greutate": "1.5 kg",
+    "vaccinat": false,
+    "simptome": "Nevoie de vaccin"
+  },
+  {
+    "animalId": 9,
+    "greutate": "1.9 kg",
+    "vaccinat": false,
+    "simptome": "Nevoide de vaccin"
+  },
+  {
+    "animalId": 10,
+    "greutate": "0.3 kg",
+    "vaccinat": false,
+    "simptome": "Fractura la membru"
   }
 ]

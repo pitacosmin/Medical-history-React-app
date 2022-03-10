@@ -1,4 +1,6 @@
 const ServiciiDB = require("../models").Servicii;
+const sequelize = require("../models/index").sequelize;
+const { QueryTypes } = require("sequelize");
 
 const controller = {
   addServiciu: async (req, res) => {
@@ -36,13 +38,39 @@ const controller = {
     }
   },
 
+  findServiciuById: async (req, res) => {
+    try {
+      const serviciuDB = await sequelize.query(
+        "SELECT DISTINCT * FROM SERVICII WHERE serviciuId = :serviciuId",
+        {
+          replacements: {
+            serviciuId: req.params.id,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (!serviciuDB) {
+        return res.status(404).json(null);
+      } else {
+        res.status(200).json(serviciuDB);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(null);
+    }
+  },
+
   deleteServiciuById: async (req, res) => {
     try {
-      const serviciuDB = await ServiciiDB.destroy({
-        where: {
-          serviciuId: req.params.id,
-        },
+      const serviciuDB = await sequelize.query(
+        "DELETE FROM SERVICII WHERE serviciuId = :serviciuId",
+        {
+          replacements: {
+            serviciuId: req.params.id,
+          },
+          type: QueryTypes.DELETE,
       });
+      console.log("AM AJUNS AIA");
       if (!serviciuDB) {
         res
           .status(404)
@@ -56,33 +84,29 @@ const controller = {
     }
   },
 
-  updatePret: async (req, res) => {
+  updateServiciuById: async (req,res) => {
     try {
-      const serviciuDBBeforeUpdate = await ServiciiDB.findByPk(req.params.id);
-      if (!serviciuDBBeforeUpdate) {
-        return res
-          .status(404)
-          .json({ message: "No serviciu found with Id " + req.params.id });
-      }
-      if (!req.body.pret) {
-        return res.status(400).json({ message: "Pret invalid" });
-      }
-      const serviciuDB = await ServiciiDB.update(
+    const [results, rows] = await sequelize.query(
+        "UPDATE SERVICII" + 
+        " SET tipServiciu=:tipServiciu, pret=:pret, descriere=:descriere" + 
+        " WHERE serviciuId = :serviciuId",
         {
-          pret: req.body.pret,
-        },
-        {
-          where: {
+          replacements: {
+            tipServiciu: req.body.tipServiciu,
+            pret: req.body.pret,
+            descriere: req.body.descriere,
             serviciuId: req.params.id,
           },
+          type: QueryTypes.UPDATE,
+        });
+        if(rows===1){
+          return res.status(204).json({ message: "Update successful"});
         }
-      );
-      return res.status(200).json({ message: "Pret serviciu updated" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error on updating pret serviciu" });
-    }
-  },
+      }catch(error){
+        console.log(error);
+        res.status(500).json({ message: "Error on updating serviciu" });
+      }
+  }
 };
 
 module.exports = controller;

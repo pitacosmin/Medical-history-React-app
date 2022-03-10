@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Table, Button } from "react-bootstrap";
 import MediciFunctions from "../../functions/mediciFunctions";
 
 const InformatiiMedic = (props) => {
+  const mediciFunctions = new MediciFunctions();
   const [medic, setMedic] = useState(null);
   const [consultatiiAndServicii, setConsultatiiAndServicii] = useState([]);
 
@@ -15,7 +17,7 @@ const InformatiiMedic = (props) => {
         await functions.getConsultatiiAndServiciiForMedic(
           props.location.state.medicId
         );
-      setConsultatiiAndServicii([...consultatiiAndServicii.data]);
+      setConsultatiiAndServicii([...consultatiiAndServicii]);
       const medicData = medicResponse.data[0];
       setMedic(medicData);
     };
@@ -28,6 +30,7 @@ const InformatiiMedic = (props) => {
         display: "flex",
         flexGrow: 1,
         height: "100vh",
+        width:"200vh",
       }}
     >
       <div
@@ -73,22 +76,49 @@ const InformatiiMedic = (props) => {
         >
           Consultatii
         </h1>
-        {consultatiiAndServicii.map((value, idx) => (
-          <div
-            key={idx}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-            }}
-          >
-            <p>Data consultatie: {value.data}</p>
-            <p>Tip serviciu: {value.tipServiciu}</p>
-            <p>Descriere: {value.descriere}</p>
-            <p>Pret: {value.pret} lei</p>
-            <br></br>
+          <Button variant="secondary" onClick={async () => {
+              const newconsultatii = await mediciFunctions.getConsultatiiForMedicByPret(props.location.state.medicId);
+              setConsultatiiAndServicii(newconsultatii.data);
+          }}>
+             Afisati consultatiile cu pret {'>'} media preturilor 
+          </Button>
+          <div style={{marginTop: 10}}>
+            <Button variant="secondary" onClick={async () => {
+                const newconsultatii = await mediciFunctions.getConsultatiiForMedicByYear(props.location.state.medicId);
+                setConsultatiiAndServicii(newconsultatii.data);
+            }}>
+              Afisati doar consultatiile din cel mai recent an (descrescator)
+            </Button>
           </div>
-        ))}
+          <div style={{marginTop: 10}}>
+            <Button variant="danger" onClick={async () => {
+                const consultatii = await mediciFunctions.getConsultatiiAndServiciiForMedic(props.location.state.medicId);
+                setConsultatiiAndServicii(consultatii);
+            }}>
+              Reseteaza
+            </Button>
+          </div>
+          
+          <Table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Tip serviciu</th>
+                    <th>Descriere</th>
+                    <th>Pret</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {consultatiiAndServicii.map((value, idx) => (
+                <tr key={idx}>
+                  <td>{value.data}</td>
+                  <td>{value.tipServiciu}</td>
+                  <td>{value.descriere}</td>
+                  <td>{value.pret} lei</td>
+                </tr>
+                ))}
+                </tbody>
+          </Table>
       </div>
     </div>
   ) : null;

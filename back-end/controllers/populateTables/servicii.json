@@ -18,5 +18,30 @@
     "tipServiciu": "Investigatii imagistice",
     "pret": 300,
     "descriere": "Diagnosticarea animalului in baza unor imagini ale unor sectiuni din corpul respectivului animal"
+  },
+  {
+    "tipServiciu": "Vaccinare",
+    "pret": 85,
+    "descriere": "Vaccin PUPPY -DP pentru caine"
+  },
+  {
+    "tipServiciu": "Vaccinare",
+    "pret": 150,
+    "descriere": "Vaccin anual pentru caine"
+  },
+  {
+    "tipServiciu": "Vaccinare",
+    "pret": 100,
+    "descriere": "Vaccin pentru pisica"
+  },
+  {
+    "tipServiciu": "Deparazitare",
+    "pret": 25,
+    "descriere": "Protejeaza cainii si pisicile de purici,capuse,tantari,paduchi,viermi intestinali cardiaci"
+  },
+  {
+    "tipServiciu": "Consulatie de specialitate",
+    "pret": 25,
+    "descriere": "Consultatii generale de sanatate"
   }
 ]

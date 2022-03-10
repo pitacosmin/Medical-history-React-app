@@ -32,6 +32,41 @@
     "nume": "Diablo",
     "specie": "piton",
     "rasa": "regal",
-    "dataNasterii": "5-30-2020"
+    "dataNasterii": "5-30-2015"
+  },
+  {
+    "proprietarId": 2,
+    "nume": "Lola",
+    "specie": "caine",
+    "rasa": "poodle",
+    "dataNasterii": "5-9-2021"
+  },
+  {
+    "proprietarId": 3,
+    "nume": "Nero",
+    "specie": "caine",
+    "rasa": "bulldog",
+    "dataNasterii": "10-1-2019"
+  },
+  {
+    "proprietarId": 5,
+    "nume": "Mia",
+    "specie": "pisica",
+    "rasa": "siameza",
+    "dataNasterii": "11-10-2018"
+  },
+  {
+    "proprietarId": 5,
+    "nume": "Bruno",
+    "specie": "pisica",
+    "rasa": "siameza",
+    "dataNasterii": "7-5-2017"
+  },
+  {
+    "proprietarId": 2,
+    "nume": "Zoe",
+    "specie": "hamster",
+    "rasa": "sirian",
+    "dataNasterii": "6-8-2019"
   }
 ]

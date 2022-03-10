@@ -1,49 +1,48 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-import MediciFunctions from "../functions/mediciFunctions";
+import ServiciiFunctions from "../functions/serviciiFunctions";
 
-import Medic from "./Medic/Medic";
+import Serviciu from "./Serviciu/Serviciu";
 
-class Medici extends Component {
+class Servicii extends Component {
   constructor(props) {
     super(props);
-    this.goToFormularMedici = this.goToFormularMedici.bind(this);
-    this.deleteMedic = this.deleteMedic.bind(this);
+    this.goToFormularServicii = this.goToFormularServicii.bind(this);
+    this.deleteServiciu = this.deleteServiciu.bind(this);
   }
 
   state = {
-    medicList: [],
-    functions: new MediciFunctions(),
+    serviciuList: [],
+    functions: new ServiciiFunctions(),
   };
 
   componentDidMount() {
-    this.state.functions.getAllMedici().then((medici)=>{
+    this.state.functions.getAllServicii().then((servicii)=>{
 
       this.setState({
-        medicList: medici,
+        serviciuList: servicii,
       });
     }).catch((error)=>{
       console.log(error);
     });
   }
 
-  goToFormularMedici = () => {
+  goToFormularServicii = () => {
     this.props.history.push({
-      pathname: "/formularMedici",
+      pathname: "/formularServicii",
     });
   };
 
-  deleteMedic(medicId) {
-    this.state.functions.deleteMedic(medicId).then(()=>{
+  deleteServiciu(serviciuId) {
+    this.state.functions.deleteServiciu(serviciuId).then(()=>{
       this.setState({
         ...this.state,
-        medicList: this.state.medicList.filter((medic) => {
-          return medic.medicId !== medicId;
+        serviciuList: this.state.serviciuList.filter((serviciu) => {
+          return serviciu.serviciuId !== serviciuId;
         })
       })  
     });
-
   }
 
   render() {
@@ -64,13 +63,13 @@ class Medici extends Component {
             gridGap: "50px",
           }}
         >
-          {this.state.medicList.length !== 0
-            ? this.state.medicList.map((value, index) => (
-                <Medic
+          {this.state.serviciuList.length !== 0
+            ? this.state.serviciuList.map((value, index) => (
+                <Serviciu
                   key={index}
-                  medic={value}
-                  deleteMedic={this.deleteMedic}
-                  findMedicById={this.findMedicById}
+                  serviciu={value}
+                  deleteServiciu={this.deleteServiciu}
+                  findServiciuById={this.findServiciuById}
                 />
               ))
             : null}
@@ -87,9 +86,9 @@ class Medici extends Component {
           <Button
             variant="outline-primary"
             size="lg"
-            onClick={this.goToFormularMedici}
+            onClick={this.goToFormularServicii}
           >
-            Adauga medic
+            Adauga serviciu
           </Button>
         </div>
       </div>
@@ -97,4 +96,4 @@ class Medici extends Component {
   }
 }
 
-export default Medici;
+export default Servicii;

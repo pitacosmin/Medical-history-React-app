@@ -5,6 +5,15 @@ import { useHistory } from "react-router-dom";
 
 const Medic = ({ medic, deleteMedic }) => {
   const history = useHistory();
+  
+  const goToFormularMedici = () => {
+    history.push({
+      pathname: "/formularMedici",
+      state: {
+        medicId: medic.medicId,
+      },
+    });
+  };
 
   const goToInformatiiMedic = () => {
     history.push({
@@ -27,7 +36,7 @@ const Medic = ({ medic, deleteMedic }) => {
         <Card.Img variant="top" />
         <Card.Body>
           <Card.Title>{medic.nume + " " + medic.prenume}</Card.Title>
-          <Card.Text>{medic.specializare}</Card.Text>
+          <Card.Text>{"Specializare: " + medic.specializare}</Card.Text>
           <Button
             variant="primary"
             onClick={() => {
@@ -36,7 +45,11 @@ const Medic = ({ medic, deleteMedic }) => {
           >
             Detalii
           </Button>
-          <Button variant="primary" style={{ marginLeft: "15px" }}>
+          <Button variant="primary" style={{ marginLeft: "15px" }}
+            onClick={() => {
+              goToFormularMedici();
+            }}
+          >
             Modifica
           </Button>
           <div

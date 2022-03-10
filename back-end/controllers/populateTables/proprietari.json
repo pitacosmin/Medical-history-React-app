@@ -22,5 +22,11 @@
     "prenume": "Alexandra",
     "numarTelefon": "0700000001",
     "email": "grigore.alexandra@email.com"
+  },
+  {
+    "nume": "Popescu",
+    "prenume": "Andrei",
+    "numarTelefon": "0700000011",
+    "email": "popescu.andrei@email.com"
   }
 ]

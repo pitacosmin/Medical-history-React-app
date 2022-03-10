@@ -18,5 +18,25 @@
   {
     "medicId": 2,
     "serviciuId": 1
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 7
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 8
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 9
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 6
+  },
+  {
+    "medicId": 2,
+    "serviciuId": 5
   }
 ]

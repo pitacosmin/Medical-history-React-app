@@ -118,7 +118,10 @@ const controller = {
   findConsultatiiAndServiciiForMedicByIdMedic: async (req, res) => {
     try {
       const consultatiiDB = await sequelize.query(
-        "SELECT C.data, S.tipServiciu, S.pret, S.descriere FROM MEDICI as M INNER JOIN MEDICIXSERVICII as MXS ON M.medicId = MXS.medicId INNER JOIN CONSULTATII as C ON MXS.mediciXserviciiId = C.mediciXserviciiId INNER JOIN SERVICII as S ON S.serviciuId = MXS.serviciuId WHERE M.medicId = :medicId",
+        "SELECT C.data, S.tipServiciu, S.pret, S.descriere FROM MEDICI as M" + 
+        " INNER JOIN MEDICIXSERVICII as MXS ON M.medicId = MXS.medicId" +  
+        " INNER JOIN CONSULTATII as C ON MXS.mediciXserviciiId = C.mediciXserviciiId" +  
+        " INNER JOIN SERVICII as S ON S.serviciuId = MXS.serviciuId WHERE M.medicId = :medicId",
         {
           replacements: {
             medicId: req.params.id,
@@ -126,8 +129,66 @@ const controller = {
           type: QueryTypes.SELECT,
         }
       );
+      if (!consultatiiDB) {
+        return res.status(404).json(null);
+      } else {
+        res.status(200).json(consultatiiDB);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(null);
+    }
+  },
 
-      // const medicDB = await MediciDB.findByPk(req.params.id);
+  getConsultatiiForMedicByPret: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+        "SELECT C.data, S.tipServiciu, S.pret, S.descriere FROM MEDICI as M" + 
+              " INNER JOIN MEDICIXSERVICII as MXS ON M.medicId = MXS.medicId" + 
+              " INNER JOIN CONSULTATII as C ON MXS.mediciXserviciiId = C.mediciXserviciiId" +
+              " INNER JOIN SERVICII as S ON S.serviciuId = MXS.serviciuId" +
+        " WHERE S.pret >= (SELECT AVG(S2.pret) FROM SERVICII as S2 " +
+						               " INNER JOIN MEDICIXSERVICII as MXS2 ON S2.serviciuId = MXS2.serviciuId" +
+						               " INNER JOIN MEDICI as M2 ON M2.medicId=MXS2.medicId" +
+						               " INNER JOIN CONSULTATII as C2 ON MXS2.mediciXserviciiId = C2.mediciXserviciiId" +
+                           " WHERE M2.medicId = M.medicId)" +
+        " AND M.medicId = :medicId",
+        {
+          replacements: {
+            medicId: req.params.id,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (!consultatiiDB) {
+        return res.status(404).json(null);
+      } else {
+        res.status(200).json(consultatiiDB);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(null);
+    }
+  },
+
+  getConsultatiiForMedicByYear: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+        "SELECT C.data, S.tipServiciu, S.pret, S.descriere FROM consultatii C" +
+        " INNER JOIN MEDICIXSERVICII as MXS ON MXS.mediciXserviciiId = C.mediciXserviciiId" +  
+        " INNER JOIN SERVICII as S ON S.serviciuId = MXS.serviciuId" +
+		    " WHERE YEAR(C.data) = (SELECT MAX(YEAR(C2.data)) FROM CONSULTATII C2" + 
+							" JOIN MEDICIXSERVICII as MXS2 ON MXS2.mediciXserviciiId = C2.mediciXserviciiId" +
+                           " WHERE MXS2.medicId = MXS.medicId)" +
+        " AND MXS.medicId = :medicId" + 
+        " ORDER BY C.data DESC",
+        {
+          replacements: {
+            medicId: req.params.id,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
       if (!consultatiiDB) {
         return res.status(404).json(null);
       } else {
@@ -169,6 +230,32 @@ const controller = {
       res.status(500).json({ message: "Error on deleting medic" });
     }
   },
+
+  updateMedicById: async (req,res) => {
+    try {
+    const [results, rows] = await sequelize.query(
+        "UPDATE MEDICI" + 
+        " SET nume=:nume, prenume=:prenume, sex=:sex, specializare=:specializare, dataNasterii=:dataNasterii" + 
+        " WHERE medicId = :medicId",
+        {
+          replacements: {
+            nume: req.body.nume,
+            prenume: req.body.prenume,
+            sex: req.body.sex,
+            specializare: req.body.specializare,
+            dataNasterii: req.body.dataNasterii,
+            medicId: req.params.id,
+          },
+          type: QueryTypes.UPDATE,
+        });
+        if(rows===1){
+          return res.status(204).json({ message: "Update successful"});
+        }
+      }catch(error){
+        console.log(error);
+        res.status(500).json({ message: "Error on updating medic" });
+      }
+  }
 };
 
 module.exports = controller;

@@ -13,6 +13,26 @@ class FormularMedici extends Component {
     this.goBack = this.goBack.bind(this);
   }
 
+  componentDidMount(){
+    if(this.props.location.state){
+      this.state.functions.findMedicById(this.props.location.state.medicId)
+      .then((response)=>{
+        const medic = response.data[0];
+        if(medic){
+          this.setState({ ...this.state, 
+            nume: medic.nume,
+            prenume: medic.prenume,
+            checkedRadio: medic.sex === "M" ? "Barbat":"Femeie",
+            specializare: medic.specializare,
+            dataNasterii: new Date(medic.dataNasterii),
+            });
+        }
+      }).catch((error)=>{
+        console.log(error);
+      });
+    }
+  }
+
   state = {
     nume: "",
     prenume: "",
@@ -41,7 +61,11 @@ class FormularMedici extends Component {
       sex: this.state.checkedRadio,
       specializare: this.state.specializare,
     };
-    await this.state.functions.addMedic(medic);
+    if(this.props.location.state){
+      await this.state.functions.updateMedic(this.props.location.state.medicId,medic);
+    } else{
+      await this.state.functions.addMedic(medic);
+    }
     this.props.history.push("/");
   }
 
@@ -61,6 +85,7 @@ class FormularMedici extends Component {
             <Form.Control
               type="text"
               placeholder="Enter nume"
+              value={this.state.nume}
               onChange={(e) => {
                 this.setState({
                   nume: e.target.value,
@@ -74,6 +99,7 @@ class FormularMedici extends Component {
             <Form.Control
               type="text"
               placeholder="Enter prenume"
+              value={this.state.prenume}
               onChange={(e) => {
                 this.setState({
                   prenume: e.target.value,
@@ -105,6 +131,7 @@ class FormularMedici extends Component {
             <Form.Control
               as="textarea"
               rows={2}
+              value={this.state.specializare}
               onChange={(e) => {
                 this.setState({
                   specializare: e.target.value,
@@ -129,7 +156,7 @@ class FormularMedici extends Component {
             }}
             onClick={this.goBack}
           >
-            Submit
+            {this.props.location.state ? "Modifica":"Adauga"}
           </Button>
         </Form>
       </div>

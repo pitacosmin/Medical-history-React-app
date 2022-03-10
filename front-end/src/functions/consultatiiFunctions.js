@@ -15,6 +15,30 @@ class ConsultatiiFunctions {
       console.log(error);
     }
   }
+
+  async getConsultatiiByMedic(nume) {
+    try {
+      const consultatiiResponse = await axios.get(
+        `${SERVER}/getConsultatiiByMedic/${nume}`
+      );
+      const consultatii = consultatiiResponse.data;
+      return consultatii;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getConsultatiiBySpecie(specie) {
+    try {
+      const speciiResponse = await axios.get(
+        `${SERVER}/getConsultatiiBySpecie/${specie}`
+      );
+      const specii = speciiResponse.data;
+      return specii;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default ConsultatiiFunctions;

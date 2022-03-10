@@ -123,6 +123,56 @@ const controller = {
       res.status(500).json({ message: "Error on retrieving consultatii" });
     }
   },
+
+  getConsultatiiByMedic: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+        "SELECT C.data, M.nume as numeMedic, M.prenume, A.nume as numeAnimal, F.simptome, S.tipServiciu" +
+          " FROM CONSULTATII as C INNER JOIN MEDICIXSERVICII as MXS ON MXS.mediciXserviciiId = C.mediciXserviciiId" +
+          " INNER JOIN MEDICI as M ON MXS.medicId = M.medicId" +
+          " INNER JOIN SERVICII as S ON MXS.serviciuId = S.serviciuId" +
+          " INNER JOIN FISEMEDICALE as F ON C.fisaId = F.fisaId" +
+          " INNER JOIN ANIMALE as A ON F.animalId = A.animalId" +
+	        " WHERE M.nume IN (SELECT M2.nume FROM MEDICI M2 WHERE M2.nume = :nume)" +
+	        " OR M.prenume IN (SELECT M3.prenume FROM MEDICI M3 WHERE M3.prenume = :nume)",
+        {
+          replacements: {
+            nume: req.params.nume
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+      res.status(200).json(consultatiiDB);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on retrieving consultatii by medic" });
+    }
+  },
+
+  getConsultatiiBySpecie: async (req, res) => {
+    try {
+      const consultatiiDB = await sequelize.query(
+
+        " SELECT C.data, M.nume as numeMedic, M.prenume, A.nume as numeAnimal, F.simptome, S.tipServiciu" +
+        " FROM (SELECT A2.animalId, A2.nume FROM Animale A2 WHERE A2.specie = :specie) as A, CONSULTATII as C" +
+		      " INNER JOIN MEDICIXSERVICII as MXS ON MXS.mediciXserviciiId = C.mediciXserviciiId" +
+          " INNER JOIN MEDICI as M ON MXS.medicId = M.medicId" +
+          " INNER JOIN SERVICII as S ON MXS.serviciuId = S.serviciuId" +
+          " INNER JOIN FISEMEDICALE as F ON C.fisaId = F.fisaId" +
+	      "	WHERE A.animalId = F.animalId",
+        {
+          replacements: {
+            specie: req.params.specie
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+      res.status(200).json(consultatiiDB);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error on retrieving consultatii by specie" });
+    }
+  },
 };
 
 module.exports = controller;

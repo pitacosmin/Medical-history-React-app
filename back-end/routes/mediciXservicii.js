@@ -7,15 +7,9 @@ const mediciXserviciiController = require("../controllers").mediciXservicii;
 router.post("/addMedicXServiciu", mediciXserviciiController.addMedicXServiciu);
 
 // GET
-router.get(
-  "/findAllMediciXServicii",
-  mediciXserviciiController.findAllMediciXServicii
-);
+router.get("/findAllMediciXServicii",mediciXserviciiController.findAllMediciXServicii);
 
 // DELETE
-router.delete(
-  "/deleteMedicXServiciuById/:id",
-  mediciXserviciiController.deleteMedicXServiciuById
-);
+router.delete("/deleteMedicXServiciuById/:id", mediciXserviciiController.deleteMedicXServiciuById);
 
 module.exports = router;
